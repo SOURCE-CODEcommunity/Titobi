@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+        <title>Manage Posts</title>
+    {% endblock title %}
+    
+    {% block style %}
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Hind+Madurai:wght@300;400;500;600;700&family=Poppins:ital,wght@0,400;1,900&display=swap');
+
+            :root{
+                --bg-light: #fff;
+                --bg-dark: #283122;
+                --bg-cloud: #f5f5da;
+                --bg-sun: #00461b;
+                --bg-light-body: #000000;
+                --bg-dark-body: #ffffff;
+                --bg-light-checkbox-one: #bfd66b;
+                --bg-light-checkbox-two: #90d1c7;
+                --bg-dark-checkbox-one: #73abb9;
+                --bg-dark-checkbox-two: #335a63;
+            }
+            body{
+                font-family: Hind Madurai;
+                color: #fff;
+                /* width: 100%; */
+                height: 95.7vh;
+                width: 100vw;
+                background: url('{{init_imgs.4.banner.url}}');
+            }
+            svg{
+                width: 30px;
+                height: 30px;
+                /* fill: ; */
+                background-color: white;
+                border-radius: 50%;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            /* Navbar styles */
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: #33333300;
+                color: white;
+                z-index: 1000;
+                padding: 10px 20px;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            }
+
+            .navbar-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            /* Logo */
+            .logo {
+                font-family: Great Vibes;
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: rgb(255, 255, 255);
+                text-decoration: none;
+            }
+
+            /* Navbar links */
+            .nav-links {
+                list-style: none;
+                display: flex;
+                gap: 15px;
+            }
+
+            .nav-links li a {
+                color: rgb(255, 255, 255);
+                text-decoration: none;
+                font-size: 1rem;
+                padding: 8px 12px;
+                border-radius: 5px;
+                transition: 0.3s ease;
+            }
+
+            .nav-links li a:hover {
+                background-color: rgb(85, 85, 85, .15);
+                color: rgb(35, 44, 20);
+            }
+
+            .container {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                
+                transform: rotateY(360deg);
+            }
+
+            .section {
+                display: none; 
+                position: absolute;
+                top: 10%;
+                left: 5%;
+                width: 90%;
+                height: 80%;
+                background-color: rgba(0, 0, 0, 0.346);
+                box-shadow: 1px 1px 20px black;
+                border-radius: 10px;
+                padding: 0px 30px 0px;
+                overflow: scroll;
+                z-index: 0;
+
+                transform: translateX(500px);
+                animation: slideIn .5s ease-in-out 1 forwards;
+            }
+
+            .section::-webkit-scrollbar {
+                width: 0px;
+            }
+
+            .section.active {
+                display: block;
+            }
+
+            @keyframes slideIn {
+                to {
+                    transform: translateX(0px);
+                }
+            }
+
+            .section div p {
+                list-style: none;
+                margin: 30px 0px;
+                font-size: 1.2rem;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.571);
+                padding: 0px  3px 0px;
+                transition: .3s ease-in-out;
+                color: white;
+            }
+
+            .section div p :hover {
+                background-color: rgba(0, 0, 0, 0.727);
+                color: rgba(255, 255, 255, 0.813);
+            }
+
+            .section div .post.orders {
+                border: 1px solid rgba(255, 255, 255, 0.7);
+                border-radius: 10px;
+                padding: 3px;
+                margin: 14px 0px;
+            }
+
+            .section div .post.posts {
+                display: none;
+            }
+
+            .section div .post.posts.active {
+                display: block;
+                position: absolute;
+            }
+
+            .links {
+                display: flex;
+                position: fixed;
+                top: 13%;
+                right: 0%;
+                background-color: rgba(0, 0, 0, 0.516);
+                padding: 5px 14px 5px 5px;
+                border-radius: 5px;
+                gap: 10px;
+                z-index: 1;
+            }
+
+            .links a {
+                color: rgb(170, 0, 255);
+                
+                transition: .3s ease-in-out;
+                /* text-decoration: none; */
+            }
+
+            .links a:hover {
+                color: rgb(255, 0, 43);
+                /* text-decoration: none; */
+            }
+
+            .section div img {
+                width: 30%;
+                border: 1px solid rgba(255, 255, 255, 0.212);
+            }
+
+            .section div ul {
+                max-width: 90%;
+                display: flex;
+                gap: 10px;
+                overflow: scroll;
+                position: absolute;
+                bottom: 0%;
+                justify-content: start;
+
+            }
+
+            .section div ul::-webkit-scrollbar {
+                width: 0px;
+            }
+
+            .section div ul li {
+                background-color: rgba(117, 117, 117, 0.315);
+                padding: 3px;
+                border-radius: 5px;
+                list-style: none;
+                transition: .3s;
+                cursor: pointer;
+
+            }
+
+            .section div ul li:hover {
+                background-color: rgb(49, 49, 49, 0.515);
+            }
+
+        </style>
+    {% endblock style %}
+    
+</head>
+<body>
+    {% block navbar %}
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="#" class="logo">Titobi</a>
+                <ul class="nav-links">
+                    <li><a href="{% url "home" %}">Home</a></li>
+                    <li><a href="{% url "about" %}">About</a></li>
+                    <li><a href="{% url "featured items" %}">Featured Items</a></li>
+                </ul>
+
+            </div>
+        </nav>
+    {% endblock navbar %}
+    
+
+    {% block content %}
+        <div class="container">
+                <div class="links">
+                    <a href="#">Posts</a>
+                    <a href="#">Orders</a>
+                    <a href="{% url "new post" %}">New Post</a>
+                    <a href="{% url "admin:index" %}">Manage Posts</a>
+                    <a href="{% url "logout" %}">Logout</a>
+                </div>
+                
+                <section class="section active">
+                    <h1>Posts</h1>
+                    <div>
+                        {% for post in posts %}
+                            {% if forloop.first %}
+                                <div class="post posts active">
+                                    <p>{{post.title}}</p>
+                                    <p>{{post.body}}.</p>
+                                    <img src="{{post.banner.url}}" alt="{{post.title}}">
+                                    <p>{{post.date}}</p>
+                                </div>
+                            {% else %}
+                                <div class="post posts">
+                                    <p>{{post.title}}</p>
+                                    <p>{{post.body}}.</p>
+                                    <img src="{{post.banner.url}}" alt="{{post.title}}">
+                                    <p>{{post.date}}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+            
+                        <ul>
+                            {% for post in posts  %}
+                                <li>{{post.title}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h1>Orders</h1>
+                    <div>
+                        {% for order in orders %}
+                            <div class="post orders">
+                                <p>{{order.title}}</p>
+                                {% comment %} <img src="{{order.image.url}}" alt="{{order.title}}"> {% endcomment %}
+                                <p>Phone Number: {{order.phone_number}}</p>
+                                <p>Contact Method: {{order.contact_method}}</p>
+                                <p>Placed at: {{order.date}}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+        </div>
+    {% endblock content %}
+
+
+
+    {% block script %}
+        <script>
+            let section = document.querySelectorAll('.section');
+            let links = document.querySelectorAll('.links a');
+            let posts = document.querySelectorAll('.section div.post.posts');
+            let tabs = document.querySelectorAll('.section div ul li');
+
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('click', () => {
+
+                    postActiveOld = document.querySelector('.section .post.posts.active');
+
+                    postActiveOld.classList.remove('active');
+
+                    posts[index].classList.add('active');
+
+                })
+            })
+            links.forEach((link, index) => {
+                link.addEventListener('click', () => {
+                    if (index < 2){
+                        sectionActiveOld = document.querySelector('.section.active');
+
+                        sectionActiveOld.classList.remove('active');
+
+                        section[index].classList.add('active');
+                    }
+                })
+            })
+        </script>
+    {% endblock script %}
+    
+</body>
+</html>
