@@ -56,7 +56,11 @@ def Order(request):
         order_ = order(title= title, phone_number= phone_number, contact_method= contact_method)
         order_.save()
 
-        messages.success(request, f'Order as successfully been placed {'you will receive a phone call soon on further details' if contact_method!='Whatsapp' else 'you will receive a whatsapp message soon on further details'} Thank you!')
+        if contact_method!='Whatsapp':
+            messages.success(request, 'Order has successfully been placed you will receive a phone call soon with further details Thank you!' 
+        else:
+            messages.success(request, 'Order has successfully been placed you will receive a whatsapp message soon with further details Thank you!' 
+        #messages.success(request, f'Order as successfully been placed {'you will receive a phone call soon on further details' if contact_method!='Whatsapp' else 'you will receive a whatsapp message soon on further details'} Thank you!')
         return redirect('featured items')
     else:
         return redirect('featured items')
