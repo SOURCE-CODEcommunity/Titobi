@@ -30,7 +30,8 @@ def logout_view(request):
 def home_page(request):
     init_imgs = init_img.objects.all()
     gifs = gif.objects.all()
-    return render(request, 'home.html', {'init_imgs': init_imgs, 'gifs': gifs})
+    details = detail.objects.all()
+    return render(request, 'home.html', {'init_imgs': init_imgs, 'gifs': gifs, 'details': details})
 
 def featured_items(request):
     posts = post.objects.all().order_by('-date')
