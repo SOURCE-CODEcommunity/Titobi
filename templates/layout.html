@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+        <title>Titobi</title>
+    {% endblock title %}
+
+    {% block style %}
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Hind+Madurai:wght@300;400;500;600;700&family=Poppins:ital,wght@0,400;1,900&display=swap');
+
+            :root{
+                --bg-light: #fff;
+                --bg-dark: #283122;
+                --bg-cloud: #f5f5da;
+                --bg-sun: #00461b;
+                --bg-light-body: #000000;
+                --bg-dark-body: #ffffff;
+                --bg-light-checkbox-one: #bfd66b;
+                --bg-light-checkbox-two: #90d1c7;
+                --bg-dark-checkbox-one: #73abb9;
+                --bg-dark-checkbox-two: #335a63;
+            }
+            body{
+                font-family: Hind Madurai;
+                color: #fff;
+                /* width: 100%; */
+                height: 95.7vh;
+                background: url('./pexels-shattha-pilabut-38930-135620.jpg');
+            }
+            svg{
+                width: 30px;
+                height: 30px;
+                background-color: white;
+                border-radius: 50%;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            /* Navbar styles */
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: #33333300;
+                color: white;
+                z-index: 1000;
+                padding: 10px 20px;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            }
+
+            .navbar-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            /* Logo */
+            .logo {
+                font-family: Great Vibes;
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: rgb(0, 0, 0);
+                text-decoration: none;
+            }
+
+            /* Navbar links */
+            .nav-links {
+                list-style: none;
+                display: flex;
+                gap: 15px;
+            }
+
+            .nav-links li a {
+                color: rgb(0, 0, 0);
+                text-decoration: none;
+                font-size: 1rem;
+                padding: 8px 12px;
+                border-radius: 5px;
+                transition: 0.3s ease;
+            }
+
+            .nav-links li a:hover {
+                background-color: rgb(85, 85, 85, .15);
+                color: rgb(35, 44, 20);
+            }
+
+            .checkboxDesign{
+                position: absolute;
+                top: 0px;
+                left: 0vw;
+                display: inline-block;
+                width: 50px;
+                height: 25px;
+                background-color: transparent;
+                /* background-image: linear-gradient(
+                    to top, 
+                    var(--bg-light-checkbox-one), 
+                    var(--bg-light-checkbox-two)
+                ); */
+                border-radius: 50px;
+                position: relative;
+                box-shadow: 0 0 0 2px var(--bg-light-body), 
+                0 0 0 2px var(--bg-light-checkbox-one)
+                ;
+                transition: .5s;
+                z-index: 100;
+            }
+            .checkboxDesign input{
+                display: none;
+            }
+            .checkboxDesign::before{
+                position: absolute;
+                top: 3px;
+                left: 25px;
+                background-image: linear-gradient(135deg, black, green);
+                content: '';
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                /* box-shadow: 83px -5px 0 -25px var(--bg-cloud), 
+                    98px -21px 0 -30px var(--bg-cloud), 
+                    120px -7px 0 -27px var(--bg-cloud), 
+                    109px 5px 0 -28px var(--bg-cloud)
+                ; */
+                transition: .5s;
+            }
+            body:has(input[name="checkboxDesign"]:checked){
+                /* background-color: var(--bg-dark-body); */
+                background: linear-gradient(135deg, rgb(255, 255, 255, .1), var(--bg-dark) 50%), url('./pexels-shattha-pilabut-38930-135620.jpg');
+                color: #ffffff;
+            }
+            .checkboxDesign:has(input:checked){
+                box-shadow: 0 0 0 2px var(--bg-dark-body), 
+                0 0 0 2px var(--bg-dark-checkbox-one);
+                backdrop-filter: blur(20px);
+                /* background-image: linear-gradient(to top, 
+                var(--bg-dark-checkbox-one), 
+                var(--bg-dark-checkbox-two)            
+                ); */
+            }
+            .checkboxDesign:has(input:checked)::before{
+                left: calc(100% - 46px);
+                /* box-shadow: -70px -3px 0 -42px var(--bg-cloud), 
+                -90px -23px 0 -30px var(--bg-cloud), 
+                -120px 8px 0 -40px var(--bg-cloud),
+                -87px 21px 0 -41px var(--bg-cloud); */
+            }
+
+            .footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                backdrop-filter: blur(28px);
+                color: white;
+                z-index: 1000;
+                padding: 10px 20px;
+                box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.2);
+            }
+            .footer-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                max-width: 1200px;
+                margin: 0 auto;
+                list-style: none;
+            }
+            .footer-container li a {
+                color: rgb(0, 0, 0);
+                text-decoration: none;
+                font-size: 1rem;
+                padding: 8px 12px;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+            section{
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            /* .display.over{
+                background: linear-gradient( 135deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.514) 70%);
+                background-color: #ffc40017;
+                backdrop-filter: blur(0px);
+                z-index: 6;
+            } */
+            .display{
+                position: absolute;
+                top: 8%;
+                left: .3%;
+                width: 97.5vw;
+                height: 92vh;
+                border: 1px solid white;
+                border-radius: 14px;
+                backdrop-filter: blur(14px);
+                overflow: hidden;
+                /* background: linear-gradient( 135deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.911) 0%); */
+            }
+
+            .display .over{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                border-radius: 14px;
+                background: linear-gradient( 135deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.514) 70%);
+                z-index: 6;
+            }
+
+            .display .item .description{
+                display: none;
+            }
+            .display .item.active .description{
+                display: block;
+                position: absolute;
+                bottom: 15%;
+                left: 3%;
+                width: 50%;
+                color: rgb(255, 255, 255);
+                z-index: 6;
+                filter: blur(10px);
+                opacity: 0;
+                animation: fadeIn 2s ease-in-out 1 forwards;
+                animation-delay: .5s;
+            }
+            .display .item .description h1{
+                font-size: 3rem;
+                font-weight: 100;
+                font-family: Poppins;
+                letter-spacing: 10px;
+                margin-bottom: 70px;
+                color: white;
+            }
+            .display .item .description p{
+                font-size: 1.2rem;
+                font-weight: 10;
+                letter-spacing: 1px;
+                margin-bottom: 70px;
+                text-shadow: 0px 3px 10px rgba(0, 0, 0, 0.096);
+                color: white;
+            }
+            .display .item.active .description p{
+                animation-delay: 1s;
+            }
+            .display .item .image{
+                display: none;
+                position: absolute;
+                width: 150%;
+                top: 5%;
+                border-radius: 10px;
+                left: 2%;
+                
+            }
+            .display .item.active .image{
+                display: block;
+                z-index: 5;
+                filter: blur(10px);
+                opacity: 0;
+                animation: fadeIn 2s ease-in-out 1 forwards;
+            }
+            @keyframes fadeIn {
+                to{
+                    filter: blur(0px);
+                    opacity: 1;
+                    color: rgb(0, 0, 0);
+                }
+            }
+            /* .cover{
+                position: absolute;
+                top: 40%;
+            } */
+            .container{
+                position: relative;
+                top: -15%;
+                left:14%;
+            }
+            .circle{
+                position: absolute;
+                top: 11%;
+                left: 54%;
+                width: 900px;
+                height: 910px;
+                border-radius: 50%;
+                /* backdrop-filter: blur(30px); */
+                background: conic-gradient(
+                    rgb(255, 0, 0, 0) 0% 5%,
+                    #fff 10% 70%,
+                    /* rgb(255, 165, 0) 30% 60%, */
+                    rgb(255, 0, 0, 0) 80% 100%
+                );
+                transform: rotateZ(-55deg);
+                z-index: 7;
+                /* display: none; */
+            }
+            .items{
+                position: absolute;
+                top: 11%;
+                left: 54%;
+                width: 900px;
+                height: 900px;
+                border-radius: 50%;
+                /* background: conic-gradient(
+                    rgb(210, 255, 216) 4% 10%,
+                    rgb(255, 255, 255) 13.3% 43.3%,
+                    rgb(210, 255, 216) 46.3% 53.3%,
+                    rgb(255, 255, 255) 56.6% 86.6%,
+                    rgb(210, 255, 216) 89.6% 96.6%
+                ); */
+                /* background: white; */
+                backdrop-filter: blur(21px);
+                transform: rotate(0deg);
+                z-index: 6;
+                overflow: hidden;
+                animation: rotateSlide1 5s ease-in-out infinite;
+            }
+            @keyframes rotateSlide1{
+                33.3%{
+                    transform: rotate(120deg);
+                }
+                66.6%{
+                    transform: rotate(240deg);
+                }
+                100%{
+                    transform: rotate(359deg);
+                }
+            }
+            .items .ani_icon.one{
+                width: 30%;
+                height: 30%;
+                transform: translate(10%, 120%);
+                border: 2px solid rgb(0, 68, 6);
+                border-radius: 50%;
+                mix-blend-mode: multiply;
+            }
+            .items .ani_icon.two{
+                width: 30%;
+                height: 30%;
+                transform: translate(65%, 200%) rotate(240deg);
+                border: 2px solid rgb(0, 68, 6);
+                border-radius: 50%;
+                mix-blend-mode: multiply;
+            }
+            .items .ani_icon.three{
+                width: 30%;
+                height: 30%;
+                transform: translate(-40%, 30%) rotate(120deg);
+                border: 2px solid rgb(0, 68, 6);
+                border-radius: 50%;
+                mix-blend-mode: multiply;
+            }
+
+            #gmail, #phoneno{
+                display: none;
+            }
+
+            @media screen and (max-width: 720px) {
+                .container{
+                    display: none;
+                }
+
+                .display .item .image{
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            @media screen and (max-width: 380px) {
+                .display{
+                    top: 14%;
+                }
+                .display .item .description h1{
+                    margin-top: 100px;
+                    font-size: 1.5rem;
+                }
+                .display .item .description p{
+                    font-size: 1rem;
+                }
+            }
+        
+        </style>
+    {% endblock style %}
+</head>
+<body>
+
+    {% block content %}
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="#" class="logo">Titobi</a>
+                <ul class="nav-links">
+                    <li><a href="{% url "home" %}">Home</a></li>
+                    <li><a href="{% url "about" %}">About</a></li>
+                    <li><a href="{% url "featured items" %}">Featured Items</a></li>
+                </ul>
+                
+                <!-- <label class="checkboxDesign">
+                    <input type="checkbox" name="checkboxDesign" id="">
+                </label> -->
+
+            </div>
+        </nav>
+    {% endblock content %}
+
+    {% block content1 %}
+        
+    {% endblock content1 %}
+
+    {% block content2 %}
+    <footer class="footer">
+            <ul class="footer-container">
+                <li id="GM"><a href="#gmail"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+                    <path d="M 5.5 7 C 3.03125 7 1.011719 9.015625 1 11.484375 C 1 11.484375 1 11.488281 1 11.492188 C 1 11.496094 1 11.496094 1 11.5 L 1 38.5 C 1 40.972656 3.027344 43 5.5 43 L 44.5 43 C 46.972656 43 49 40.972656 49 38.5 L 49 11.5 C 49 11.496094 49 11.496094 49 11.492188 C 49 11.488281 49 11.484375 49 11.484375 C 48.988281 9.015625 46.96875 7 44.5 7 Z M 8.101563 9 L 41.902344 9 L 25 20.78125 Z M 4.773438 9.117188 L 25 23.21875 L 45.230469 9.117188 C 46.253906 9.425781 46.992188 10.355469 47 11.488281 C 46.996094 11.699219 46.78125 12.121094 46.46875 12.460938 C 46.152344 12.804688 45.84375 13.019531 45.84375 13.019531 L 45.839844 13.027344 L 25 27.777344 L 4.160156 13.027344 L 4.15625 13.019531 C 4.15625 13.019531 3.847656 12.804688 3.53125 12.460938 C 3.21875 12.121094 3.003906 11.699219 3 11.488281 C 3.007813 10.355469 3.746094 9.425781 4.773438 9.117188 Z M 3 14.652344 C 3 14.652344 3.007813 14.660156 3.007813 14.660156 L 3.015625 14.664063 L 3.015625 14.667969 L 6 16.777344 L 6 41 L 5.5 41 C 4.109375 41 3 39.890625 3 38.5 Z M 47 14.652344 L 47 38.5 C 47 39.890625 45.890625 41 44.5 41 L 44 41 L 44 16.777344 L 46.984375 14.667969 L 46.984375 14.664063 C 46.984375 14.664063 47 14.652344 47 14.652344 Z M 8 18.191406 L 25 30.222656 L 42 18.191406 L 42 41 L 8 41 Z"></path>
+                    </svg></a> <p id="gmail">test123@gmail.com</p></li>
+                <li><a href="#about">@Titobi<data id="year"></data></a></li>
+                <li id="PN"><a href="#whatsapp"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+                    <path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 29.079097 3.1186875 32.88588 4.984375 36.208984 L 2.0371094 46.730469 A 1.0001 1.0001 0 0 0 3.2402344 47.970703 L 14.210938 45.251953 C 17.434629 46.972929 21.092591 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 21.278025 46 17.792121 45.029635 14.761719 43.333984 A 1.0001 1.0001 0 0 0 14.033203 43.236328 L 4.4257812 45.617188 L 7.0019531 36.425781 A 1.0001 1.0001 0 0 0 6.9023438 35.646484 C 5.0606869 32.523592 4 28.890107 4 25 C 4 13.390466 13.390466 4 25 4 z M 16.642578 13 C 16.001539 13 15.086045 13.23849 14.333984 14.048828 C 13.882268 14.535548 12 16.369511 12 19.59375 C 12 22.955271 14.331391 25.855848 14.613281 26.228516 L 14.615234 26.228516 L 14.615234 26.230469 C 14.588494 26.195329 14.973031 26.752191 15.486328 27.419922 C 15.999626 28.087653 16.717405 28.96464 17.619141 29.914062 C 19.422612 31.812909 21.958282 34.007419 25.105469 35.349609 C 26.554789 35.966779 27.698179 36.339417 28.564453 36.611328 C 30.169845 37.115426 31.632073 37.038799 32.730469 36.876953 C 33.55263 36.755876 34.456878 36.361114 35.351562 35.794922 C 36.246248 35.22873 37.12309 34.524722 37.509766 33.455078 C 37.786772 32.688244 37.927591 31.979598 37.978516 31.396484 C 38.003976 31.104927 38.007211 30.847602 37.988281 30.609375 C 37.969311 30.371148 37.989581 30.188664 37.767578 29.824219 C 37.302009 29.059804 36.774753 29.039853 36.224609 28.767578 C 35.918939 28.616297 35.048661 28.191329 34.175781 27.775391 C 33.303883 27.35992 32.54892 26.991953 32.083984 26.826172 C 31.790239 26.720488 31.431556 26.568352 30.914062 26.626953 C 30.396569 26.685553 29.88546 27.058933 29.587891 27.5 C 29.305837 27.918069 28.170387 29.258349 27.824219 29.652344 C 27.819619 29.649544 27.849659 29.663383 27.712891 29.595703 C 27.284761 29.383815 26.761157 29.203652 25.986328 28.794922 C 25.2115 28.386192 24.242255 27.782635 23.181641 26.847656 L 23.181641 26.845703 C 21.603029 25.455949 20.497272 23.711106 20.148438 23.125 C 20.171937 23.09704 20.145643 23.130901 20.195312 23.082031 L 20.197266 23.080078 C 20.553781 22.728924 20.869739 22.309521 21.136719 22.001953 C 21.515257 21.565866 21.68231 21.181437 21.863281 20.822266 C 22.223954 20.10644 22.02313 19.318742 21.814453 18.904297 L 21.814453 18.902344 C 21.828863 18.931014 21.701572 18.650157 21.564453 18.326172 C 21.426943 18.001263 21.251663 17.580039 21.064453 17.130859 C 20.690033 16.232501 20.272027 15.224912 20.023438 14.634766 L 20.023438 14.632812 C 19.730591 13.937684 19.334395 13.436908 18.816406 13.195312 C 18.298417 12.953717 17.840778 13.022402 17.822266 13.021484 L 17.820312 13.021484 C 17.450668 13.004432 17.045038 13 16.642578 13 z M 16.642578 15 C 17.028118 15 17.408214 15.004701 17.726562 15.019531 C 18.054056 15.035851 18.033687 15.037192 17.970703 15.007812 C 17.906713 14.977972 17.993533 14.968282 18.179688 15.410156 C 18.423098 15.98801 18.84317 16.999249 19.21875 17.900391 C 19.40654 18.350961 19.582292 18.773816 19.722656 19.105469 C 19.863021 19.437122 19.939077 19.622295 20.027344 19.798828 L 20.027344 19.800781 L 20.029297 19.802734 C 20.115837 19.973483 20.108185 19.864164 20.078125 19.923828 C 19.867096 20.342656 19.838461 20.445493 19.625 20.691406 C 19.29998 21.065838 18.968453 21.483404 18.792969 21.65625 C 18.639439 21.80707 18.36242 22.042032 18.189453 22.501953 C 18.016221 22.962578 18.097073 23.59457 18.375 24.066406 C 18.745032 24.6946 19.964406 26.679307 21.859375 28.347656 C 23.05276 29.399678 24.164563 30.095933 25.052734 30.564453 C 25.940906 31.032973 26.664301 31.306607 26.826172 31.386719 C 27.210549 31.576953 27.630655 31.72467 28.119141 31.666016 C 28.607627 31.607366 29.02878 31.310979 29.296875 31.007812 L 29.298828 31.005859 C 29.655629 30.601347 30.715848 29.390728 31.224609 28.644531 C 31.246169 28.652131 31.239109 28.646231 31.408203 28.707031 L 31.408203 28.708984 L 31.410156 28.708984 C 31.487356 28.736474 32.454286 29.169267 33.316406 29.580078 C 34.178526 29.990889 35.053561 30.417875 35.337891 30.558594 C 35.748225 30.761674 35.942113 30.893881 35.992188 30.894531 C 35.995572 30.982516 35.998992 31.07786 35.986328 31.222656 C 35.951258 31.624292 35.8439 32.180225 35.628906 32.775391 C 35.523582 33.066746 34.975018 33.667661 34.283203 34.105469 C 33.591388 34.543277 32.749338 34.852514 32.4375 34.898438 C 31.499896 35.036591 30.386672 35.087027 29.164062 34.703125 C 28.316336 34.437036 27.259305 34.092596 25.890625 33.509766 C 23.114812 32.325956 20.755591 30.311513 19.070312 28.537109 C 18.227674 27.649908 17.552562 26.824019 17.072266 26.199219 C 16.592866 25.575584 16.383528 25.251054 16.208984 25.021484 L 16.207031 25.019531 C 15.897202 24.609805 14 21.970851 14 19.59375 C 14 17.077989 15.168497 16.091436 15.800781 15.410156 C 16.132721 15.052495 16.495617 15 16.642578 15 z"></path>
+                    </svg></a> <p id="phoneno">+2349136407264</p></li>
+            </ul>
+    </footer>
+    {% endblock content2 %}
+
+    {% block script %}
+        <script>
+            document.getElementById("year").innerHTML = new Date().getFullYear();
+            const items = document.querySelectorAll('.item');
+            const gmailbtn = document.getElementById('GM');
+            const phonenobtn = document.getElementById('PN');
+            const gmail = document.getElementById('gmail');
+            const phoneno = document.getElementById('phoneno');
+            
+            let count = 0;
+
+            gmailbtn.onclick = () => {
+                const text = gmail.textContent;
+
+                navigator.clipboard.writeText(text).then(() => {
+                    window.alert('Gmail copied');
+                }, () => {
+                    window.alert('Failed to copy Gmail')
+                });
+            }
+
+            phonenobtn.onclick = () => {
+                const text = phoneno.textContent;
+
+                navigator.clipboard.writeText(text).then(() => {
+                    window.alert('Whatsapp contact copied');
+                }, () => {
+                    window.alert('Failed to copy Whatsapp contact')
+                });
+            }
+
+            setInterval(() => {
+                if (count >= items.length) {
+                    count = 0;
+                }
+                let itemActiveOld = document.querySelector('.display .item.active')
+                itemActiveOld.classList.remove('active');
+                items[count].classList.add('active');
+                
+                count += 1;
+            }, 7000)
+        </script>
+    {% endblock script %}
+</body>
+</html>
